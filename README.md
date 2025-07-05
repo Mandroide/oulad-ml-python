@@ -2,7 +2,7 @@
 [![Python Version](https://img.shields.io/badge/python-3.12%2B-blue)](https://www.python.org/downloads/)
 ![Build status](https://img.shields.io/github/actions/workflow/status/Mandroide/oulad-ml-python/ci.yml)
 
-This is an implementation of EDA and ETL for [OULAD Dataset](https://analyse.kmi.open.ac.uk/#open-dataset).
+This is a project to perform machine learning and data science over [OULAD Dataset](https://analyse.kmi.open.ac.uk/#open-dataset) through a pipeline to explore the data.
 
 The environment variables must be modified before running the app.
 
