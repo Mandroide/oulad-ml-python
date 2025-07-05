@@ -1,0 +1,49 @@
+[tool.poetry]
+name = "oulad-ml-python"
+version = "0.1.0"
+description = ""
+authors = ["Manuel Garcia <31109774+Mandroide@users.noreply.github.com>"]
+packages = [{ include = "oulad_etl", from = "src" }]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pandas = "^2.3.0"
+numpy = "^2.3.1"
+pyarrow = "^20.0.0"
+pydantic-settings = "^2.10.1"
+python-dotenv = "^1.1.1"
+pyyaml = "^6.0.2"
+rich = "^14.0.0"
+requests = "^2.32.4"
+tabulate = "^0.9.0"
+
+
+[tool.poetry.group.dev.dependencies]
+scikit-learn = "^1.7.0"
+ipykernel = "^6.29.5"
+jupyter = "^1.1.1"
+pytest = "^8.4.1"
+pytest-cov = "^6.2.1"
+black = "^25.1.0"
+ruff = "^0.12.2"
+mypy = "^1.16.1"
+pre-commit = "^4.2.0"
+detect-secrets = "^1.5.0"
+types-requests = "^2.32.4.20250611"
+types-pyyaml = "^6.0.12.20250516"
+types-tabulate = "^0.9.0.20241207"
+matplotlib = "^3.10.3"
+seaborn = "^0.13.2"
+pydantic = "^2.11.7"
+types-click = "^7.1.8"
+
+[tool.poetry.scripts]
+etl = "oulad_etl.cli:cli"
+
+[tool.mypy]
+plugins = ["pydantic.mypy"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
