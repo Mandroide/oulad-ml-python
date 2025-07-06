@@ -272,16 +272,40 @@ def clean_csv(
     return dataframes
 
 
-# def merge_excel_csv(
-#         dataframes_csv: dict[str, pd.DataFrame],
-#         dataframes_excel: dict[str, pd.DataFrame],
-#         target: pathlib.Path
-# ) -> dict[str, pd.DataFrame]:
-#     log.debug("Limpiando 'Assess_detail'...")
-#     df_courses_excel = dataframes_excel[TablesExcelSchema.courses]
-#     df_courses_csv = dataframes_csv[TablesCsvSchema.courses]
-#     pd.merge
-#     return dataframes
+def concat_datasets(
+    datasets_csv: dict[str, pd.DataFrame], datasets_excel: dict[str, pd.DataFrame]
+) -> dict[str, pd.DataFrame]:
+    datasets: dict[str, pd.DataFrame] = {
+        TablesCsvSchema.courses: pd.concat(
+            [
+                datasets_csv[TablesCsvSchema.courses],
+                datasets_excel[TablesCsvSchema.courses],
+            ]
+        ),
+        TablesCsvSchema.studentInfo: pd.concat(
+            [
+                datasets_csv[TablesCsvSchema.studentInfo],
+                datasets_excel[TablesCsvSchema.studentInfo],
+            ]
+        ),
+        TablesCsvSchema.studentRegistration: pd.concat(
+            [
+                datasets_csv[TablesCsvSchema.studentRegistration],
+                datasets_excel[TablesCsvSchema.studentRegistration],
+            ]
+        ),
+        TablesCsvSchema.vle: pd.concat(
+            [datasets_csv[TablesCsvSchema.vle], datasets_excel[TablesCsvSchema.vle]]
+        ),
+    }
+    # Courses
+    # Student Info
+
+    # Student Registration
+
+    # Vle
+
+    return datasets
 
 
 def clean_excel(
