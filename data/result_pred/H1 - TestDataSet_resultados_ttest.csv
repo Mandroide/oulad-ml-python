@@ -1,3 +1,7 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:27a523b05b3025b549c56881829969945e9994ad48872026a076c3a3b2274ddb
-size 226
+Variable,gender_ordinal,passed
+active_days,0.687481,0.000000
+avg_clicks_per_day,0.000014,0.028133
+avg_credits,0.123287,0.000005
+avg_score,0.059511,0.000000
+total_clicks,0.189348,0.000000
+total_credits,0.141564,0.000000

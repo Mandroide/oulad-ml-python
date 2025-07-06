@@ -1,3 +1,4 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d05cbef54859f3572a2d52fe02270028a1caaac828cd82d86e594ef1c261845e
-size 216
+cluster,total_clicks,active_days,avg_clicks_per_day,total_credits,avg_credits,approval_rate (%)
+0,1928.62,102.79,14.29,30.04,5.01,94.0
+1,4177.62,183.79,17.53,27.13,4.52,93.1
+2,1180.93,49.84,20.62,31.83,5.3,91.55
