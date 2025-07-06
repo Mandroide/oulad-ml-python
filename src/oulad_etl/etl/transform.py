@@ -45,7 +45,7 @@ def __clean_common_columns_csv(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def add_guid_to_csv(
-    dataframes: dict[str, pd.DataFrame],
+        dataframes: dict[str, pd.DataFrame],
 ) -> dict[str, pd.DataFrame]:  # Assessments
     df_assessments = dataframes[TablesCsvSchema.assessments]
     df_assessments[AssessmentsExcel.guid_assess_id] = [
@@ -89,12 +89,42 @@ def add_guid_to_csv(
     return dataframes
 
 
+def remove_id_to_csv(
+        dataframes: dict[str, pd.DataFrame]
+) -> dict[str, pd.DataFrame]:
+    df_assessments = dataframes[TablesCsvSchema.assessments]
+    df_assessments.drop(columns=[AssessmentsCsv.id_assessment], inplace=True)
+
+    # studentAssessment
+    df_student_assessment = dataframes[TablesCsvSchema.studentAssessment]
+    df_student_assessment.drop(columns=[StudentAssessmentCsv.id_assessment], inplace=True)
+    df_student_assessment.drop(columns=[StudentAssessmentCsv.id_student], inplace=True)
+
+    # Student Registration
+    df_student_registration = dataframes[TablesCsvSchema.studentRegistration]
+    df_student_registration.drop(columns=[StudentRegistrationCsv.id_student], inplace=True)
+
+    # Student Vle
+    df_student_vle = dataframes[TablesCsvSchema.studentVle]
+    df_student_vle.drop(columns=[StudentVleCsv.id_student], inplace=True)
+    df_student_vle.drop(columns=[StudentVleCsv.id_site], inplace=True)
+
+    # Student Info
+    df_student_info = dataframes[TablesCsvSchema.studentInfo]
+    df_student_info.drop(columns=[StudentInfoCsv.id_student], inplace=True)
+
+    # vle
+    df_vle = dataframes[TablesCsvSchema.vle]
+    df_vle.drop(columns=[VleCsv.id_site], inplace=True)
+
+    return dataframes
+
+
 def clean_csv(
-    dataframes: dict[str, pd.DataFrame], target: pathlib.Path
+        dataframes: dict[str, pd.DataFrame], target: pathlib.Path
 ) -> dict[str, pd.DataFrame]:
     log.debug("Limpiando 'assessments'...")
     df_assessments = dataframes[TablesCsvSchema.assessments]
-    df_assessments.drop(columns=[AssessmentsCsv.id_assessment], inplace=True)
     if AssessmentsCsv.date in df_assessments.columns:
         df_assessments[AssessmentsCsv.date] = pd.to_numeric(
             df_assessments[AssessmentsCsv.date], errors="coerce"
@@ -240,8 +270,20 @@ def clean_csv(
     return dataframes
 
 
+# def merge_excel_csv(
+#         dataframes_csv: dict[str, pd.DataFrame],
+#         dataframes_excel: dict[str, pd.DataFrame],
+#         target: pathlib.Path
+# ) -> dict[str, pd.DataFrame]:
+#     log.debug("Limpiando 'Assess_detail'...")
+#     df_courses_excel = dataframes_excel[TablesExcelSchema.courses]
+#     df_courses_csv = dataframes_csv[TablesCsvSchema.courses]
+#     pd.merge
+#     return dataframes
+
+
 def clean_excel(
-    dataframes: dict[str, pd.DataFrame], target: pathlib.Path
+        dataframes: dict[str, pd.DataFrame], target: pathlib.Path
 ) -> dict[str, pd.DataFrame]:
     log.debug("Limpiando 'Assessment_detail'...")
     df_student_assessment = dataframes[TablesExcelSchema.assess_detail]
@@ -355,9 +397,9 @@ def clean_excel(
 
 
 def merge_csv(
-    df_student_assessment: pd.DataFrame,
-    df_assessments: pd.DataFrame,
-    df_student_info: pd.DataFrame,
+        df_student_assessment: pd.DataFrame,
+        df_assessments: pd.DataFrame,
+        df_student_info: pd.DataFrame,
 ) -> pd.DataFrame:
     df_sa_detail = pd.merge(
         df_student_assessment,
@@ -395,9 +437,9 @@ def merge_csv(
 
 
 def merge_excel(
-    df_student_assessment: pd.DataFrame,
-    df_assessments: pd.DataFrame,
-    df_student_info: pd.DataFrame,
+        df_student_assessment: pd.DataFrame,
+        df_assessments: pd.DataFrame,
+        df_student_info: pd.DataFrame,
 ) -> pd.DataFrame:
     df_sa_detail = pd.merge(
         df_student_assessment,
