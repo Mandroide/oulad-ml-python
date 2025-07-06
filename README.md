@@ -21,7 +21,8 @@ oulad-ml-python/                  # ── project root ────────
 │   ├── raw/                    # ZIP + extracted CSVs
 │   └── processed/              # cleaned parquet, features, etc.
 ├── notebooks/                  # Jupyter EDA
-│   └── 00_eda_overview.ipynb
+│   └── H1 - Hipotesis.ipynb
+│   └── H2 - Hipotesis.ipynb
 ├── resources/                  # README resources
 │   └── diagram.svg
 ├── src/oulad_etl/              # ── importable package ----------------------
