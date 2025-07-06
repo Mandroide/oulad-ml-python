@@ -59,6 +59,7 @@ pip install poetry
 ```bash
 git clone <repo-url>
 cd oulad-ml-python
+cp .env.example .env # modify excel file absolute path
 poetry install
 poetry run pre-commit install
 poetry run ipython kernel install --user --name eda_overview

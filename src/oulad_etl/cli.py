@@ -2,7 +2,7 @@ import pathlib
 
 import click
 
-from oulad_etl.etl.models import TablesSchema
+from oulad_etl.etl.csv_models import TablesCsvSchema
 
 from .etl import download, load, summary, transform
 from .log import log  # global logging setup
@@ -23,27 +23,34 @@ def run(data_dir: str) -> None:
     processed_path.mkdir(parents=True, exist_ok=True)
 
     target_raw_path = download.download_oulad(raw_path)
+    target_raw_path = download.copy_excel_file(target_raw_path)
 
-    dfs = load.load_raw(target_raw_path)
-    summary.generate_report(dfs)
+    dfs_csv = load.load_raw_csv(target_raw_path)
+    dfs_excel = load.load_raw_excel()
 
-    dfs = transform.clean(dfs, processed_path)
+    summary.generate_report(dfs_csv)
+    summary.generate_report(dfs_excel)
+
+    # Union
+
+    dfs_csv = transform.clean_csv(dfs_csv, processed_path)
+    dfs_excel = transform.clean_excel(dfs_excel, processed_path)
 
     # Merge
-    df_etl = transform.merge(
-        df_student_assessment=dfs[TablesSchema.studentAssessment],
-        df_assessments=dfs[TablesSchema.assessments],
-        df_student_info=dfs[TablesSchema.studentInfo],
+    df_etl = transform.merge_csv(
+        df_student_assessment=dfs_csv[TablesCsvSchema.studentAssessment],
+        df_assessments=dfs_csv[TablesCsvSchema.assessments],
+        df_student_info=dfs_csv[TablesCsvSchema.studentInfo],
     )
 
     load.save_to_csv(df=df_etl, target_file_path=processed_path / "etl_output.csv")
 
     # Encode studentInfo fields as ordinals
-    dfs[TablesSchema.studentInfo] = transform.encode_as_ordinal(
-        dfs[TablesSchema.studentInfo]
+    dfs_csv[TablesCsvSchema.studentInfo] = transform.encode_as_ordinal(
+        dfs_csv[TablesCsvSchema.studentInfo]
     )
     load.save_to_csv(
-        df=dfs[TablesSchema.studentInfo],
+        df=dfs_csv[TablesCsvSchema.studentInfo],
         target_file_path=processed_path / "studentInfo_ordinal.csv",
     )
 

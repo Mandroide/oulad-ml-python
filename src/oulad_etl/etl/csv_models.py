@@ -1,7 +1,7 @@
 from enum import StrEnum
 
 
-class TablesSchema(StrEnum):
+class TablesCsvSchema(StrEnum):
     assessments = "assessments"
     courses = "courses"
     studentAssessment = "studentAssessment"
@@ -11,13 +11,13 @@ class TablesSchema(StrEnum):
     vle = "vle"
 
 
-class CoursesSchema(StrEnum):
+class CoursesCsv(StrEnum):
     code_module = "code_module"
     code_presentation = "code_presentation"
     module_presentation_length = "module_presentation_length"
 
 
-class StudentInfo(StrEnum):
+class StudentInfoCsv(StrEnum):
     code_module = "code_module"
     code_presentation = "code_presentation"
     id_student = "id_student"
@@ -37,7 +37,7 @@ class StudentInfo(StrEnum):
     final_result_ord = "final_result_ord"
 
 
-class Assessments(StrEnum):
+class AssessmentsCsv(StrEnum):
     code_module = "code_module"
     code_presentation = "code_presentation"
     id_assessment = "id_assessment"
@@ -46,7 +46,7 @@ class Assessments(StrEnum):
     weight = "weight"
 
 
-class Vle(StrEnum):
+class VleCsv(StrEnum):
     id_site = "id_site"
     code_module = "code_module"
     code_presentation = "code_presentation"
@@ -55,7 +55,7 @@ class Vle(StrEnum):
     week_to = "week_to"
 
 
-class StudentAssessment(StrEnum):
+class StudentAssessmentCsv(StrEnum):
     id_student = "id_student"
     id_assessment = "id_assessment"
     date_submitted = "date_submitted"
@@ -63,7 +63,7 @@ class StudentAssessment(StrEnum):
     score = "score"
 
 
-class StudentRegistration(StrEnum):
+class StudentRegistrationCsv(StrEnum):
     code_module = "code_module"
     code_presentation = "code_presentation"
     id_student = "id_student"
@@ -71,7 +71,7 @@ class StudentRegistration(StrEnum):
     date_unregistration = "date_unregistration"
 
 
-class StudentVle(StrEnum):
+class StudentVleCsv(StrEnum):
     id_site = "id_site"
     id_student = "id_student"
     code_module = "code_module"

@@ -6,12 +6,14 @@ import sys
 
 import pandas as pd
 
-from .models import TablesSchema
+from ..settings import settings
+from .csv_models import TablesCsvSchema
+from .excel_models import TablesExcelSchema
 
 log = logging.getLogger(__name__)
 
 
-def load_raw(target: pathlib.Path) -> dict[str, pd.DataFrame]:
+def load_raw_csv(target: pathlib.Path) -> dict[str, pd.DataFrame]:
     """
     Load raw data from CSV file.
     :param target: Directory with csv files
@@ -19,13 +21,13 @@ def load_raw(target: pathlib.Path) -> dict[str, pd.DataFrame]:
     """
     dataset = {}
     csv_tablas = {
-        f"{TablesSchema.courses}.csv": TablesSchema.courses,
-        f"{TablesSchema.studentInfo}.csv": TablesSchema.studentInfo,
-        f"{TablesSchema.assessments}.csv": TablesSchema.assessments,
-        f"{TablesSchema.vle}.csv": TablesSchema.vle,
-        f"{TablesSchema.studentAssessment}.csv": TablesSchema.studentAssessment,
-        f"{TablesSchema.studentRegistration}.csv": TablesSchema.studentRegistration,
-        f"{TablesSchema.studentVle}.csv": TablesSchema.studentVle,
+        f"{TablesCsvSchema.courses}.csv": TablesCsvSchema.courses,
+        f"{TablesCsvSchema.studentInfo}.csv": TablesCsvSchema.studentInfo,
+        f"{TablesCsvSchema.assessments}.csv": TablesCsvSchema.assessments,
+        f"{TablesCsvSchema.vle}.csv": TablesCsvSchema.vle,
+        f"{TablesCsvSchema.studentAssessment}.csv": TablesCsvSchema.studentAssessment,
+        f"{TablesCsvSchema.studentRegistration}.csv": TablesCsvSchema.studentRegistration,
+        f"{TablesCsvSchema.studentVle}.csv": TablesCsvSchema.studentVle,
     }
     for file_name in csv_tablas:
         file_path = target / file_name
@@ -37,6 +39,24 @@ def load_raw(target: pathlib.Path) -> dict[str, pd.DataFrame]:
             log.debug(f"  - '{file_name}' loaded as '{df_name}'")
         except FileNotFoundError:
             log.error("Expected %s not found", file_path)
+            sys.exit(1)
+    return dataset
+
+
+def load_raw_excel() -> dict[str, pd.DataFrame]:
+    """
+    Load raw data from an Excel file.
+    :return: Dictionary of dataframes
+    """
+    dataset = {}
+    for table in [*TablesExcelSchema]:
+        try:
+            dataset[table] = pd.read_excel(
+                settings.excel_absolute_path, sheet_name=table
+            )
+            log.debug(f"  - sheet '{table}' loaded as '{table}'")
+        except FileNotFoundError:
+            log.error("Expected %s not found", table)
             sys.exit(1)
     return dataset
 
