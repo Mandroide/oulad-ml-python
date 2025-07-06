@@ -45,7 +45,7 @@ def __clean_common_columns_csv(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def add_guid_to_csv(
-        dataframes: dict[str, pd.DataFrame],
+    dataframes: dict[str, pd.DataFrame],
 ) -> dict[str, pd.DataFrame]:  # Assessments
     df_assessments = dataframes[TablesCsvSchema.assessments]
     df_assessments[AssessmentsExcel.guid_assess_id] = [
@@ -89,20 +89,22 @@ def add_guid_to_csv(
     return dataframes
 
 
-def remove_id_to_csv(
-        dataframes: dict[str, pd.DataFrame]
-) -> dict[str, pd.DataFrame]:
+def remove_id_to_csv(dataframes: dict[str, pd.DataFrame]) -> dict[str, pd.DataFrame]:
     df_assessments = dataframes[TablesCsvSchema.assessments]
     df_assessments.drop(columns=[AssessmentsCsv.id_assessment], inplace=True)
 
     # studentAssessment
     df_student_assessment = dataframes[TablesCsvSchema.studentAssessment]
-    df_student_assessment.drop(columns=[StudentAssessmentCsv.id_assessment], inplace=True)
+    df_student_assessment.drop(
+        columns=[StudentAssessmentCsv.id_assessment], inplace=True
+    )
     df_student_assessment.drop(columns=[StudentAssessmentCsv.id_student], inplace=True)
 
     # Student Registration
     df_student_registration = dataframes[TablesCsvSchema.studentRegistration]
-    df_student_registration.drop(columns=[StudentRegistrationCsv.id_student], inplace=True)
+    df_student_registration.drop(
+        columns=[StudentRegistrationCsv.id_student], inplace=True
+    )
 
     # Student Vle
     df_student_vle = dataframes[TablesCsvSchema.studentVle]
@@ -121,7 +123,7 @@ def remove_id_to_csv(
 
 
 def clean_csv(
-        dataframes: dict[str, pd.DataFrame], target: pathlib.Path
+    dataframes: dict[str, pd.DataFrame], target: pathlib.Path
 ) -> dict[str, pd.DataFrame]:
     log.debug("Limpiando 'assessments'...")
     df_assessments = dataframes[TablesCsvSchema.assessments]
@@ -283,7 +285,7 @@ def clean_csv(
 
 
 def clean_excel(
-        dataframes: dict[str, pd.DataFrame], target: pathlib.Path
+    dataframes: dict[str, pd.DataFrame], target: pathlib.Path
 ) -> dict[str, pd.DataFrame]:
     log.debug("Limpiando 'Assessment_detail'...")
     df_student_assessment = dataframes[TablesExcelSchema.assess_detail]
@@ -397,9 +399,9 @@ def clean_excel(
 
 
 def merge_csv(
-        df_student_assessment: pd.DataFrame,
-        df_assessments: pd.DataFrame,
-        df_student_info: pd.DataFrame,
+    df_student_assessment: pd.DataFrame,
+    df_assessments: pd.DataFrame,
+    df_student_info: pd.DataFrame,
 ) -> pd.DataFrame:
     df_sa_detail = pd.merge(
         df_student_assessment,
@@ -437,9 +439,9 @@ def merge_csv(
 
 
 def merge_excel(
-        df_student_assessment: pd.DataFrame,
-        df_assessments: pd.DataFrame,
-        df_student_info: pd.DataFrame,
+    df_student_assessment: pd.DataFrame,
+    df_assessments: pd.DataFrame,
+    df_student_info: pd.DataFrame,
 ) -> pd.DataFrame:
     df_sa_detail = pd.merge(
         df_student_assessment,
